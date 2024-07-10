@@ -8,16 +8,16 @@ The primary objective of this project is to develop an automated system that tra
 
 Adludio, a leader in online mobile advertising, aims to:
 
-    Streamline and enhance ad creation by automating the conversion of textual ad concepts into dynamic visual storyboards.
-    Expedite the ideation and execution phases of ad campaigns, reducing turnaround time from weeks to days.
-    Maximize engagement and campaign performance through interactive ads that resonate with viewers.
+Streamline and enhance ad creation by automating the conversion of textual ad concepts into dynamic visual storyboards.
+Expedite the ideation and execution phases of ad campaigns, reducing turnaround time from weeks to days.
+Maximize engagement and campaign performance through interactive ads that resonate with viewers.
 
 ## Key Components
 
-    ** Comprehensive Brief Collection: ** Gather detailed information on brand identity, advertising objectives, guidelines, KPIs, and budget.
-    Interactive Advertisement Design: Leverage a rich media creative toolkit to design dynamic ads, including mini-games, videos, texts, and images.
-    **Sophisticated Distribution:** Utilize real-time bidding to target audiences and distribute creative content effectively.
-    Optimization Through Machine Learning: Enhance creative design and targeting processes using advanced algorithms to ensure maximum impact
+** Comprehensive Brief Collection: ** Gather detailed information on brand identity, advertising objectives, guidelines, KPIs, and budget.
+Interactive Advertisement Design: Leverage a rich media creative toolkit to design dynamic ads, including mini-games, videos, texts, and images.
+**Sophisticated Distribution:** Utilize real-time bidding to target audiences and distribute creative content effectively.
+Optimization Through Machine Learning: Enhance creative design and targeting processes using advanced algorithms to ensure maximum impact
 
 
 
