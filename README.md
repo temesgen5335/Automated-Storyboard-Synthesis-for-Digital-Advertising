@@ -14,42 +14,46 @@ Maximize engagement and campaign performance through interactive ads that resona
 
 ## Key Components
 
-** Comprehensive Brief Collection: ** Gather detailed information on brand identity, advertising objectives, guidelines, KPIs, and budget.
+-Comprehensive Brief Collection: Gather detailed information on brand identity, advertising objectives, guidelines, KPIs, and budget.
 Interactive Advertisement Design: Leverage a rich media creative toolkit to design dynamic ads, including mini-games, videos, texts, and images.
-**Sophisticated Distribution:** Utilize real-time bidding to target audiences and distribute creative content effectively.
+-Sophisticated Distribution: Utilize real-time bidding to target audiences and distribute creative content effectively.
 Optimization Through Machine Learning: Enhance creative design and targeting processes using advanced algorithms to ensure maximum impact
 
 
 
 ## Folder Structure
-
-    ├── data/
-    │   ├── Assets/
-    │   └── concept/
-    │       └── concept.json
-    ├── images/
+    .
+    ├── data
+    │   ├── Assets
+    │   └── concept
+    ├── images
+    │   └── tumbnails
     ├── LICENCE
-    ├── models/
-    ├── notebooks/
-    │   ├── autogen.ipynb
-    │   └── EDA.ipynb
+    ├── models
+    ├── notebooks
+    │   ├── autogen_exp.ipynb
+    │   ├── compose_example.ipynb
+    │   ├── EDA.ipynb
+    │   ├── image_analysis
+    │   ├── image_compose.ipynb
+    │   └── object detection
     ├── README.md
     ├── requirements.txt
-    └── scripts/
-
+    └── scripts
+        └── symbol_detector.py
 
 ## Installation
 
 1. Clone the repository
 
 ```sh
-git clone https://github.com/temesgen5335/semantic_image_and_text_alignment.git
+git clone https://github.com/temesgen5335/Automated-Storyboard-Synthesis-for-Digital-Advertising.git
 ```
 
 2. Navigate to project directory
 
 ```sh
-cd semantic_image_and_text_alignments
+cd Automated-Storyboard-Synthesis-for-Digital-Advertising
 ```
 
 3. Create a virtual environment
