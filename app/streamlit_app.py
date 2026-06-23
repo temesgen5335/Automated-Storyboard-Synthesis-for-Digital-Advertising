@@ -100,7 +100,7 @@ with tab_custom:
         except Exception as e:
             st.error(f"Invalid JSON: {e}")
 
-go = st.button("✨ Generate storyboard", type="primary", use_container_width=True)
+go = st.button("✨ Generate storyboard", type="primary", width="stretch")
 
 if go and raw_concept:
     bar = st.progress(0.0, text="Starting…")
@@ -117,7 +117,7 @@ if go and raw_concept:
             score = (board.meta.get("grade") or {}).get("overall", 0)
             with st.container(border=True):
                 st.markdown(f"**#{rank+1} · score {score:.2f}** · variant {board.meta.get('variant')}")
-                st.image(_png_bytes(board.image), use_container_width=True)
+                st.image(_png_bytes(board.image), width="stretch")
                 st.download_button(
                     "⬇ PNG", _png_bytes(board.image),
                     file_name=f"{board.concept_name[:30]}_v{rank+1}.png",
@@ -130,7 +130,7 @@ if go and raw_concept:
         bar.empty()
 
         st.subheader("Storyboard")
-        st.image(_png_bytes(board.image), use_container_width=True)
+        st.image(_png_bytes(board.image), width="stretch")
         st.download_button(
             "⬇ Download storyboard PNG", _png_bytes(board.image),
             file_name=f"{board.concept_name[:30]}_{fmt_key}.png",
