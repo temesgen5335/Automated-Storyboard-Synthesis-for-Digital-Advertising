@@ -9,6 +9,7 @@ from __future__ import annotations
 import hashlib
 import io
 import logging
+import re
 import urllib.parse
 from pathlib import Path
 from typing import Optional
@@ -54,7 +55,7 @@ class MockImageProvider(ImageProvider):
     def __init__(self, settings: Settings):
         self.settings = settings
 
-    def generate(self, prompt: str, width: int, height: int, seed: Optional[int] = None) -> Image.Image:
+    def generate(self, prompt, width, height, seed=None, *, query=None, category=None) -> Image.Image:
         h = int(hashlib.sha1(f"{prompt}{seed}".encode()).hexdigest(), 16)
         c1 = ((h >> 0) & 255, (h >> 8) & 255, (h >> 16) & 255)
         c2 = ((h >> 24) & 255, (h >> 32) & 255, (h >> 40) & 255)
@@ -87,7 +88,7 @@ class PollinationsImageProvider(_CachingMixin, ImageProvider):
         self.cache_dir = settings.cache_dir
         self._fallback = MockImageProvider(settings)
 
-    def generate(self, prompt: str, width: int, height: int, seed: Optional[int] = None) -> Image.Image:
+    def generate(self, prompt, width, height, seed=None, *, query=None, category=None) -> Image.Image:
         seed = self.settings.seed if seed is None else seed
         key = _cache_key(self.name, prompt, width, height, seed)
         if (hit := self._cached(key)) is not None:
@@ -116,7 +117,7 @@ class HuggingFaceImageProvider(_CachingMixin, ImageProvider):
         self.model = settings.hf_image_model
         self._fallback = MockImageProvider(settings)
 
-    def generate(self, prompt: str, width: int, height: int, seed: Optional[int] = None) -> Image.Image:
+    def generate(self, prompt, width, height, seed=None, *, query=None, category=None) -> Image.Image:
         seed = self.settings.seed if seed is None else seed
         key = _cache_key(self.name + self.model, prompt, width, height, seed)
         if (hit := self._cached(key)) is not None:
@@ -138,10 +139,142 @@ class HuggingFaceImageProvider(_CachingMixin, ImageProvider):
             return self._fallback.generate(prompt, width, height, seed)
 
 
+class OpenverseImageProvider(_CachingMixin, ImageProvider):
+    """Retrieval (not generation): fetch a REAL, CC-licensed image that matches
+    the asset from the Openverse API (https://openverse.org). Keyless.
+
+    This is the "bring your own / real artifact" path — the same compositor that
+    handles generated assets composes these real photos and logos into frames.
+    Falls back to Lorem Picsum (real photos, keyless) then the mock generator.
+    """
+
+    name = "openverse"
+    API = "https://api.openverse.org/v1/images/"
+    PICSUM = "https://picsum.photos/seed/{seed}/{w}/{h}"
+
+    def __init__(self, settings: Settings):
+        self.settings = settings
+        self.cache_dir = settings.cache_dir
+        self._fallback = MockImageProvider(settings)
+        self._headers = {"User-Agent": "adsynth/0.1 (storyboard synthesis; research)"}
+        self.last_attribution: dict | None = None
+
+    _STOP = {
+        "the", "a", "an", "of", "and", "with", "to", "for", "in", "on", "is", "are",
+        "this", "that", "as", "by", "at", "from", "into", "their", "its", "it", "be",
+        "subtle", "animated", "various", "set", "scene", "designed", "encourages",
+        "viewers", "featuring", "showcasing", "series", "quick", "exciting",
+    }
+
+    def _keywords(self, text: str) -> str:
+        """Extract a short, search-friendly query from a prose asset description.
+
+        Prefers proper-noun phrases (brand/product names like "LEGO CITY"); falls
+        back to the first salient content words. Openverse needs terse queries.
+        """
+        text = text or ""
+        # proper-noun runs: capitalized or ALL-CAPS word sequences
+        proper = re.findall(r"\b(?:[A-Z][A-Za-z0-9]+|[A-Z]{2,})(?:\s+(?:[A-Z][A-Za-z0-9]+|[A-Z]{2,}))*\b", text)
+        proper = [p for p in proper if len(p) > 2]
+        if proper:
+            return " ".join(max(proper, key=len).split()[:3])
+        words = [w for w in re.findall(r"[a-zA-Z]+", text.lower()) if w not in self._STOP and len(w) > 2]
+        return " ".join(words[:3])
+
+    def _search_query(self, query: Optional[str], category: Optional[str], prompt: str) -> str:
+        kw = self._keywords(query or prompt or "")
+        cat = (category or "").lower()
+        if "logo" in cat:
+            return f"{kw} logo".strip()
+        if "background" in cat:
+            return f"{kw} landscape".strip()
+        if "icon" in cat:
+            return "swipe gesture icon" if "swipe" in (query or "").lower() else "tap gesture icon"
+        if "product" in cat:
+            return f"{kw} product".strip()
+        if "mascot" in cat or "illustration" in cat:
+            return f"{kw} illustration".strip()
+        return kw or "advertising"
+
+    def _openverse_candidates(self, query: str, seed: int) -> list[dict]:
+        """Search results, ordered so the seed picks a stable starting point."""
+        params = {"q": query, "page_size": 12, "mature": "false"}
+        r = requests.get(self.API, params=params, headers=self._headers, timeout=self.settings.request_timeout)
+        r.raise_for_status()
+        results = r.json().get("results", [])
+        if not results:
+            return []
+        start = seed % len(results)
+        ordered = results[start:] + results[:start]  # rotate, keep all as fallbacks
+        return [
+            {
+                "url": x.get("url"),
+                "title": x.get("title"),
+                "creator": x.get("creator"),
+                "license": x.get("license"),
+                "license_url": x.get("license_url"),
+                "source": x.get("source"),
+                "foreign_landing_url": x.get("foreign_landing_url"),
+                "query": query,
+            }
+            for x in ordered
+            if x.get("url")
+        ]
+
+    def generate(self, prompt, width, height, seed=None, *, query=None, category=None) -> Image.Image:
+        seed = self.settings.seed if seed is None else seed
+        q = self._search_query(query, category, prompt)
+        key = _cache_key(self.name, q, width, height, seed)
+        cached = self._cached(key)
+        if cached is not None:
+            return cached
+        # 1) Openverse search → try candidates until one downloads (some URLs 403/404)
+        try:
+            for cand in self._openverse_candidates(q, seed)[:6]:
+                try:
+                    resp = requests.get(cand["url"], headers=self._headers, timeout=self.settings.request_timeout)
+                    resp.raise_for_status()
+                    img = Image.open(io.BytesIO(resp.content)).convert("RGBA")
+                    img = _cover_resize(img, width, height)
+                    self.last_attribution = cand
+                    self._store(key, img)
+                    return img
+                except Exception:
+                    continue  # try next candidate
+            log.warning("Openverse: no downloadable result for %r; trying Picsum.", q)
+        except Exception as exc:
+            log.warning("Openverse search failed for %r (%s); trying Picsum.", q, exc)
+        # 2) Picsum (real photo, keyless)
+        try:
+            purl = self.PICSUM.format(seed=abs(seed) % 1000, w=width, h=height)
+            resp = requests.get(purl, headers=self._headers, timeout=self.settings.request_timeout)
+            resp.raise_for_status()
+            img = Image.open(io.BytesIO(resp.content)).convert("RGBA")
+            img = _cover_resize(img, width, height)
+            self.last_attribution = {"source": "Lorem Picsum", "license": "Unsplash", "query": q}
+            self._store(key, img)
+            return img
+        except Exception as exc:
+            log.warning("Picsum failed (%s); using mock generator.", exc)
+        return self._fallback.generate(prompt, width, height, seed)
+
+
+def _cover_resize(img: Image.Image, w: int, h: int) -> Image.Image:
+    """Resize+center-crop to exactly (w, h) preserving aspect (CSS object-fit: cover)."""
+    sw, sh = img.size
+    scale = max(w / sw, h / sh)
+    nw, nh = max(1, int(sw * scale)), max(1, int(sh * scale))
+    img = img.resize((nw, nh), Image.LANCZOS)
+    left, top = (nw - w) // 2, (nh - h) // 2
+    return img.crop((left, top, left + w, top + h))
+
+
 def build_image_provider(settings: Settings) -> ImageProvider:
     p = settings.image_provider.lower()
     if p == "pollinations":
         return PollinationsImageProvider(settings)
     if p == "huggingface":
         return HuggingFaceImageProvider(settings)
+    if p == "openverse":
+        return OpenverseImageProvider(settings)
     return MockImageProvider(settings)

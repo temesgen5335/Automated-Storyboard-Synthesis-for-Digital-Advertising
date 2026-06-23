@@ -57,3 +57,24 @@ def test_dco_ranks_variants():
     assert len(result.storyboards) == 2
     scores = [(b.meta.get("grade") or {}).get("overall", 0) for b in result.storyboards]
     assert scores == sorted(scores, reverse=True)  # ranked best-first
+
+
+def test_asset_pack_roundtrip(tmp_path):
+    """Build a pack with the offline mock provider, then recompose from disk."""
+    from adsynth.asset_pack import build_asset_pack, load_pack, render_pack
+    from adsynth.providers.image import MockImageProvider
+
+    raws = load_raw_concepts()
+    settings = get_settings()
+    pack = build_asset_pack(
+        raws[0], settings=settings, fmt_key="fs",
+        out_root=tmp_path, provider=MockImageProvider(settings),
+    )
+    assert (pack / "manifest.json").exists()
+    assert list(pack.glob("*.jpg")) or list(pack.glob("*.png"))
+
+    concept, assets = load_pack(pack)
+    assert concept.frames and all(fid in assets for fid in [f.id for f in concept.frames])
+
+    board = render_pack(pack, fmt_key="fs", settings=settings)
+    assert board.image is not None and board.meta["source"] == "asset-pack"

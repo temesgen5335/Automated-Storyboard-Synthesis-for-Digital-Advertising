@@ -45,7 +45,12 @@ class AssetGenerator:
         prompt = self.planner.image_prompt(brief, concept, self.brand, fmt)
         w, h = _native_size(brief, fmt)
         seed = _seed(concept.name, frame_id, brief.category, idx, self.variant)
-        img = self.image.generate(prompt, w, h, seed=seed)
+        # query/category are used by retrieval backends (Openverse); generative
+        # backends ignore them. Bias the query with the brand name for logos.
+        query = brief.description
+        if "logo" in brief.category.lower():
+            query = f"{self.brand.name} {brief.description}"
+        img = self.image.generate(prompt, w, h, seed=seed, query=query, category=brief.category)
         return GeneratedAsset(brief=brief, image=img, source=self.image.name)
 
     def generate_frame(self, frame: Frame, concept: Concept, fmt: AdFormat) -> list[GeneratedAsset]:

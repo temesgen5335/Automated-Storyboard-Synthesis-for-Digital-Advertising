@@ -1,0 +1,123 @@
+{
+  "concept": "Escape Challenge Teaser",
+  "explanation": "This concept aligns with LEGO CITY's brand identity of providing fun and entertainment. It appeals to the target demographic's interest in games and challenges, and it achieves the campaign's objectives of enhancing audience engagement, increasing product and brand awareness, and driving traffic to the brand's website. The concept is scalable and can be adapted for various platforms and audiences. It can be executed within the given budget constraints.",
+  "format": "fs",
+  "frames": {
+    "frame_1": {
+      "interaction_type": "Tap",
+      "next_frame": "frame_2",
+      "duration": "5 seconds",
+      "description": "The ad begins with a suspenseful animation of a LEGO CITY set, with the tagline 'YOUR CITY, NO LIMITS' and a countdown timer.",
+      "assets": [
+        {
+          "category": "Background Image",
+          "kind": "image",
+          "file": "frame_1__background-image__0.jpg",
+          "description": "A suspenseful animation of a LEGO CITY set, with buildings, vehicles, and mini-figures coming to life in a dynamic, 3D environment. The animation is designed to captivate the viewer's attention and set the stage for the upcoming challenge.",
+          "attribution": {
+            "url": "https://live.staticflickr.com/7411/9090214013_83cbc86b57_b.jpg",
+            "title": "Star Wars Days 2013 at LEGOLAND",
+            "creator": "Ayleen Dority",
+            "license": "by",
+            "license_url": "https://creativecommons.org/licenses/by/2.0/",
+            "source": "flickr",
+            "foreign_landing_url": "https://www.flickr.com/photos/23978325@N05/9090214013",
+            "query": "LEGO CITY landscape"
+          }
+        },
+        {
+          "category": "Text Elements",
+          "kind": "text",
+          "text": "YOUR CITY, NO LIMITS",
+          "file": "frame_1__text-elements__1.png"
+        },
+        {
+          "category": "Decorative Elements",
+          "kind": "image",
+          "file": "frame_1__decorative-elements__2.jpg",
+          "description": "A digital countdown timer, styled to resemble LEGO bricks, adds an element of suspense and anticipation, building up to the reveal of the 'ULTIMATE ESCAPE CHALLENGE'.",
+          "attribution": {
+            "url": "https://live.staticflickr.com/641/23449766336_f344e79ef4_b.jpg",
+            "title": "Mavic Ksyrium Pro Allroad Disc",
+            "creator": "Glory Cycles",
+            "license": "by",
+            "license_url": "https://creativecommons.org/licenses/by/2.0/",
+            "source": "flickr",
+            "foreign_landing_url": "https://www.flickr.com/photos/29558127@N06/23449766336",
+            "query": "ULTIMATE ESCAPE CHALLENGE"
+          }
+        }
+      ]
+    },
+    "frame_2": {
+      "interaction_type": "Swipe",
+      "next_frame": "frame_3",
+      "duration": "10 seconds",
+      "description": "The scene transitions to a series of quick, exciting clips showcasing various challenges in the 'ULTIMATE ESCAPE CHALLENGE'.",
+      "assets": [
+        {
+          "category": "Animation Frames",
+          "kind": "image",
+          "file": "frame_2__animation-frames__0.jpg",
+          "description": "A series of quick, exciting clips showcasing various challenges in the 'ULTIMATE ESCAPE CHALLENGE'. Each clip features different LEGO CITY sets and mini-figures, highlighting the diversity and expansiveness of the LEGO CITY universe.",
+          "attribution": {
+            "url": "https://live.staticflickr.com/294/19730952855_ee49aa3e19_b.jpg",
+            "title": "Second Battle of Ruweisat Ridge (El Mreir): Diary entry of Allan Edward Kennard, 1942",
+            "creator": "Archives New Zealand",
+            "license": "by",
+            "license_url": "https://creativecommons.org/licenses/by/2.0/",
+            "source": "flickr",
+            "foreign_landing_url": "https://www.flickr.com/photos/35759981@N08/19730952855",
+            "query": "ULTIMATE ESCAPE CHALLENGE"
+          }
+        },
+        {
+          "category": "Icon",
+          "kind": "image",
+          "file": "frame_2__icon__1.jpg",
+          "description": "A subtle, animated swipe indicator encourages viewers to interact with the ad and explore the different challenges.",
+          "attribution": {
+            "url": "https://live.staticflickr.com/7750/28297907601_88e678f14e.jpg",
+            "title": "DIA118: Figure 6.2b",
+            "creator": "Rosenfeld Media",
+            "license": "by",
+            "license_url": "https://creativecommons.org/licenses/by/2.0/",
+            "source": "flickr",
+            "foreign_landing_url": "https://www.flickr.com/photos/9411449@N05/28297907601",
+            "query": "swipe gesture icon"
+          }
+        }
+      ]
+    },
+    "frame_3": {
+      "interaction_type": "Tap",
+      "next_frame": "end-of-advertisement",
+      "duration": "5 seconds",
+      "description": "The final frame reveals the LEGO CITY 2024 logo and a 'Play Now' button, inviting users to join the challenge on the LEGO website.",
+      "assets": [
+        {
+          "category": "Logo",
+          "kind": "image",
+          "file": "frame_3__logo__0.jpg",
+          "description": "The LEGO CITY 2024 logo, designed with the iconic LEGO brick pattern, reinforces brand recognition and ties the ad back to the product line.",
+          "attribution": {
+            "url": "https://live.staticflickr.com/8731/16749441394_22f7c028e1_b.jpg",
+            "title": "LEGO Star Wars: Boba's Day Off",
+            "creator": "Umm, Who?",
+            "license": "pdm",
+            "license_url": "https://creativecommons.org/publicdomain/mark/1.0/",
+            "source": "flickr",
+            "foreign_landing_url": "https://www.flickr.com/photos/67167663@N02/16749441394",
+            "query": "Escape The LEGO logo"
+          }
+        },
+        {
+          "category": "Call-To-Action (CTA) Button",
+          "kind": "text",
+          "text": "Play Now",
+          "file": "frame_3__call-to-action-cta-button__1.png"
+        }
+      ]
+    }
+  }
+}

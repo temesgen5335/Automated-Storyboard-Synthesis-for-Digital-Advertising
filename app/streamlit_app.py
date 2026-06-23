@@ -42,12 +42,26 @@ st.sidebar.title("🎬 AdSynth")
 st.sidebar.caption("Text concept → storyboard · Creative Automation + DCO")
 
 settings = get_settings()
+_IMAGE_SOURCES = {
+    "pollinations": "Generate (Pollinations · keyless)",
+    "openverse": "Real assets (Openverse · CC-licensed)",
+    "huggingface": "Generate (HuggingFace · needs token)",
+    "mock": "Offline placeholders (no network)",
+}
+st.sidebar.markdown("**Image source**")
+img_src = st.sidebar.radio(
+    "image source",
+    options=list(_IMAGE_SOURCES.keys()),
+    format_func=lambda k: _IMAGE_SOURCES[k],
+    index=list(_IMAGE_SOURCES).index(settings.image_provider) if settings.image_provider in _IMAGE_SOURCES else 0,
+    label_visibility="collapsed",
+)
+settings.image_provider = img_src
 providers = Providers(settings)
 desc = providers.describe()
-st.sidebar.markdown("**Providers**")
-st.sidebar.write(
-    f"- image: `{desc['image_provider']}`\n"
-    f"- llm: `{desc['llm_provider']}` ({'on' if desc['llm_available'] else 'heuristic'})"
+st.sidebar.caption(
+    f"image `{desc['image_provider']}` · llm `{desc['llm_provider']}`"
+    f" ({'on' if desc['llm_available'] else 'heuristic'})"
 )
 
 fmt_key = st.sidebar.selectbox(

@@ -31,7 +31,7 @@ def _env(name: str, default: str = "") -> str:
 @dataclass
 class Settings:
     # --- provider selection -------------------------------------------------
-    # image: pollinations | huggingface | mock
+    # image: pollinations | openverse | huggingface | mock
     image_provider: str = field(default_factory=lambda: _env("ADSYNTH_IMAGE_PROVIDER", "pollinations"))
     # llm: gemini | groq | openrouter | none  (none => keyless template planner)
     llm_provider: str = field(default_factory=lambda: _env("ADSYNTH_LLM_PROVIDER", "none"))

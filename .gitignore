@@ -9,3 +9,8 @@ outputs/
 .DS_Store
 .ipynb_checkpoints/
 .cache/
+# downloaded real assets are reproducible via scripts/build_asset_pack.py and may
+# carry mixed CC licenses — keep the manifests (provenance) but not the binaries
+data/asset_packs/*/*.jpg
+data/asset_packs/*/*.jpeg
+data/asset_packs/*/*.png

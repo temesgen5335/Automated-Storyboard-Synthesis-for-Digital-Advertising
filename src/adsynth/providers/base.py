@@ -8,12 +8,27 @@ from PIL import Image
 
 
 class ImageProvider(ABC):
-    """Generates a raster image from a text prompt."""
+    """Produces a raster image for an asset.
+
+    ``prompt`` is the rich, brand-aware description (used by generative
+    backends). ``query`` is a short search phrase and ``category`` the asset
+    role — used by retrieval backends (e.g. Openverse) that search real images
+    rather than generate them. Generative backends ignore the latter two.
+    """
 
     name: str = "base"
 
     @abstractmethod
-    def generate(self, prompt: str, width: int, height: int, seed: Optional[int] = None) -> Image.Image:
+    def generate(
+        self,
+        prompt: str,
+        width: int,
+        height: int,
+        seed: Optional[int] = None,
+        *,
+        query: Optional[str] = None,
+        category: Optional[str] = None,
+    ) -> Image.Image:
         ...
 
 
