@@ -1,0 +1,6 @@
+# Optional: object detection / asset QA (run on Colab or a GPU box).
+# Installs torch + ultralytics; NOT needed for the core generative pipeline.
+ultralytics>=8.2.34
+torch>=2.0
+torchvision>=0.15
+opencv-python>=4.9
