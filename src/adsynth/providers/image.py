@@ -8,6 +8,7 @@ from __future__ import annotations
 
 import hashlib
 import io
+import json
 import logging
 import re
 import urllib.parse
@@ -40,11 +41,22 @@ class _CachingMixin:
                 return None
         return None
 
-    def _store(self, key: str, img: Image.Image) -> None:
+    def _store(self, key: str, img: Image.Image, attribution: Optional[dict] = None) -> None:
         try:
             img.convert("RGBA").save(self.cache_dir / f"{key}.png")
+            if attribution is not None:
+                (self.cache_dir / f"{key}.json").write_text(json.dumps(attribution))
         except Exception:
             pass
+
+    def _cached_attribution(self, key: str) -> Optional[dict]:
+        p = self.cache_dir / f"{key}.json"
+        if p.exists():
+            try:
+                return json.loads(p.read_text())
+            except Exception:
+                return None
+        return None
 
 
 class MockImageProvider(ImageProvider):
@@ -227,6 +239,7 @@ class OpenverseImageProvider(_CachingMixin, ImageProvider):
         key = _cache_key(self.name, q, width, height, seed)
         cached = self._cached(key)
         if cached is not None:
+            self.last_attribution = self._cached_attribution(key)
             return cached
         # 1) Openverse search → try candidates until one downloads (some URLs 403/404)
         try:
@@ -237,7 +250,7 @@ class OpenverseImageProvider(_CachingMixin, ImageProvider):
                     img = Image.open(io.BytesIO(resp.content)).convert("RGBA")
                     img = _cover_resize(img, width, height)
                     self.last_attribution = cand
-                    self._store(key, img)
+                    self._store(key, img, attribution=cand)
                     return img
                 except Exception:
                     continue  # try next candidate
@@ -251,8 +264,9 @@ class OpenverseImageProvider(_CachingMixin, ImageProvider):
             resp.raise_for_status()
             img = Image.open(io.BytesIO(resp.content)).convert("RGBA")
             img = _cover_resize(img, width, height)
-            self.last_attribution = {"source": "Lorem Picsum", "license": "Unsplash", "query": q}
-            self._store(key, img)
+            attribution = {"source": "Lorem Picsum", "license": "Unsplash", "query": q}
+            self.last_attribution = attribution
+            self._store(key, img, attribution=attribution)
             return img
         except Exception as exc:
             log.warning("Picsum failed (%s); using mock generator.", exc)

@@ -1,13 +1,13 @@
 {
-  "concept": "Escape Challenge Teaser",
-  "explanation": "This concept aligns with LEGO CITY's brand identity of providing fun and entertainment. It appeals to the target demographic's interest in games and challenges, and it achieves the campaign's objectives of enhancing audience engagement, increasing product and brand awareness, and driving traffic to the brand's website. The concept is scalable and can be adapted for various platforms and audiences. It can be executed within the given budget constraints.",
+  "concept": "Interactive Storytelling",
+  "explanation": "This concept aligns with LEGO CITY's brand identity of fostering imaginative play. It appeals to the target demographic's interest in stories and adventures, and it achieves the campaign's objectives of enhancing audience engagement, increasing product and brand awareness, and driving traffic to the brand's website. The concept is scalable and can be adapted for various platforms and audiences. It can be executed within the given budget constraints.",
   "format": "fs",
   "frames": {
     "frame_1": {
       "interaction_type": "Tap",
       "next_frame": "frame_2",
       "duration": "5 seconds",
-      "description": "The ad begins with a suspenseful animation of a LEGO CITY set, with the tagline 'YOUR CITY, NO LIMITS' and a countdown timer.",
+      "description": "The ad opens with a LEGO CITY set and a 'Choose Your Adventure' prompt, inviting users to tap on different parts of the city to start their story.",
       "assets": [
         {
           "category": "Background Image",
@@ -15,13 +15,13 @@
           "file": "frame_1__background-image__0.jpg",
           "description": "A suspenseful animation of a LEGO CITY set, with buildings, vehicles, and mini-figures coming to life in a dynamic, 3D environment. The animation is designed to captivate the viewer's attention and set the stage for the upcoming challenge.",
           "attribution": {
-            "url": "https://live.staticflickr.com/2036/2203318482_38768781bf_b.jpg",
-            "title": "Lego LDD Own Creation Lego City Creator Train Town",
-            "creator": "issss",
-            "license": "by-nc",
-            "license_url": "https://creativecommons.org/licenses/by-nc/2.0/",
+            "url": "https://live.staticflickr.com/7214/7350448516_3de8bfd8b7_b.jpg",
+            "title": "Los Angeles at Sunset",
+            "creator": "Brian Rinker Creative",
+            "license": "by",
+            "license_url": "https://creativecommons.org/licenses/by/2.0/",
             "source": "flickr",
-            "foreign_landing_url": "https://www.flickr.com/photos/22967784@N06/2203318482",
+            "foreign_landing_url": "https://www.flickr.com/photos/44242222@N07/7350448516",
             "query": "LEGO CITY landscape"
           }
         },
@@ -37,13 +37,13 @@
           "file": "frame_1__decorative-elements__2.jpg",
           "description": "A digital countdown timer, styled to resemble LEGO bricks, adds an element of suspense and anticipation, building up to the reveal of the 'ULTIMATE ESCAPE CHALLENGE'.",
           "attribution": {
-            "url": "https://live.staticflickr.com/4028/4385163405_16e45bb1ea_b.jpg",
-            "title": "02.24.10",
-            "creator": "colemama",
-            "license": "by-nc-sa",
-            "license_url": "https://creativecommons.org/licenses/by-nc-sa/2.0/",
+            "url": "https://live.staticflickr.com/294/19730952855_ee49aa3e19_b.jpg",
+            "title": "Second Battle of Ruweisat Ridge (El Mreir): Diary entry of Allan Edward Kennard, 1942",
+            "creator": "Archives New Zealand",
+            "license": "by",
+            "license_url": "https://creativecommons.org/licenses/by/2.0/",
             "source": "flickr",
-            "foreign_landing_url": "https://www.flickr.com/photos/33901022@N00/4385163405",
+            "foreign_landing_url": "https://www.flickr.com/photos/35759981@N08/19730952855",
             "query": "ULTIMATE ESCAPE CHALLENGE"
           }
         }
@@ -53,7 +53,7 @@
       "interaction_type": "Swipe",
       "next_frame": "frame_3",
       "duration": "10 seconds",
-      "description": "The scene transitions to a series of quick, exciting clips showcasing various challenges in the 'ULTIMATE ESCAPE CHALLENGE'.",
+      "description": "Depending on the user's choice, the scene transitions to a unique, animated story set in the chosen part of the city.",
       "assets": [
         {
           "category": "Animation Frames",
@@ -61,13 +61,13 @@
           "file": "frame_2__animation-frames__0.jpg",
           "description": "A series of quick, exciting clips showcasing various challenges in the 'ULTIMATE ESCAPE CHALLENGE'. Each clip features different LEGO CITY sets and mini-figures, highlighting the diversity and expansiveness of the LEGO CITY universe.",
           "attribution": {
-            "url": "https://live.staticflickr.com/7040/6965686523_d97ae95300_b.jpg",
-            "title": "San Francisco - Alcatraz: Cellhouse - Battle of Alcatraz",
+            "url": "https://live.staticflickr.com/7040/6819564688_0da9465e19_b.jpg",
+            "title": "San Francisco - Alcatraz: Cellhouse - Gun Gallery",
             "creator": "wallyg",
             "license": "by-nc-nd",
             "license_url": "https://creativecommons.org/licenses/by-nc-nd/2.0/",
             "source": "flickr",
-            "foreign_landing_url": "https://www.flickr.com/photos/70323761@N00/6965686523",
+            "foreign_landing_url": "https://www.flickr.com/photos/70323761@N00/6819564688",
             "query": "ULTIMATE ESCAPE CHALLENGE"
           }
         },
@@ -77,13 +77,13 @@
           "file": "frame_2__icon__1.jpg",
           "description": "A subtle, animated swipe indicator encourages viewers to interact with the ad and explore the different challenges.",
           "attribution": {
-            "url": "https://live.staticflickr.com/8685/27760060534_f6ef69aaba.jpg",
-            "title": "DIA117: Figure 6.2a",
-            "creator": "Rosenfeld Media",
-            "license": "by",
-            "license_url": "https://creativecommons.org/licenses/by/2.0/",
-            "source": "flickr",
-            "foreign_landing_url": "https://www.flickr.com/photos/9411449@N05/27760060534",
+            "url": "https://upload.wikimedia.org/wikipedia/commons/3/32/Mona_Lisa_2024.jpg",
+            "title": "Mona Lisa 2024",
+            "creator": "R. Gopakumar",
+            "license": "cc0",
+            "license_url": "https://creativecommons.org/publicdomain/zero/1.0/deed.en/",
+            "source": "wikimedia",
+            "foreign_landing_url": "https://commons.wikimedia.org/w/index.php?curid=151409017",
             "query": "swipe gesture icon"
           }
         }
@@ -93,7 +93,7 @@
       "interaction_type": "Tap",
       "next_frame": "end-of-advertisement",
       "duration": "5 seconds",
-      "description": "The final frame reveals the LEGO CITY 2024 logo and a 'Play Now' button, inviting users to join the challenge on the LEGO website.",
+      "description": "The story concludes with a cliffhanger, and a 'Continue the Adventure' button appears, directing users to the LEGO website.",
       "assets": [
         {
           "category": "Logo",
@@ -101,14 +101,14 @@
           "file": "frame_3__logo__0.jpg",
           "description": "The LEGO CITY 2024 logo, designed with the iconic LEGO brick pattern, reinforces brand recognition and ties the ad back to the product line.",
           "attribution": {
-            "url": "https://live.staticflickr.com/65535/49983292338_34db5ecd3b_b.jpg",
-            "title": "\u30bf\u30a4\u30d0\u30b9\u30bf\u30fc (TIE Buster)",
-            "creator": "Brick.Ninja",
-            "license": "by-sa",
-            "license_url": "https://creativecommons.org/licenses/by-sa/2.0/",
+            "url": "https://live.staticflickr.com/65535/54202016469_e893d12036_b.jpg",
+            "title": "LEGOLAND Discovery Center Osaka",
+            "creator": "dalecruse",
+            "license": "by",
+            "license_url": "https://creativecommons.org/licenses/by/2.0/",
             "source": "flickr",
-            "foreign_landing_url": "https://www.flickr.com/photos/138954197@N08/49983292338",
-            "query": "Escape The LEGO logo"
+            "foreign_landing_url": "https://www.flickr.com/photos/91873384@N04/54202016469",
+            "query": "Interactive The LEGO logo"
           }
         },
         {

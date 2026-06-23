@@ -59,6 +59,9 @@ def build_asset_pack(
     # default to real-asset retrieval; injectable for tests / alternative sources
     provider = provider or OpenverseImageProvider(settings)
     planner = Planner(Providers(settings).llm)
+    # per-concept seed so distinct concepts don't collide on the shared image cache
+    import hashlib as _hl
+    base_seed = int(_hl.sha1(concept.name.encode()).hexdigest(), 16) % 100000
 
     pack_dir = out_root / _slug(concept.name)
     pack_dir.mkdir(parents=True, exist_ok=True)
@@ -87,7 +90,7 @@ def build_asset_pack(
                 w, h = (fmt.width, fmt.height) if "background" in brief.category.lower() else (512, 512)
                 img = provider.generate(
                     planner.image_prompt(brief, concept, brand, fmt), w, h,
-                    seed=settings.seed + i, query=query, category=brief.category,
+                    seed=base_seed + i, query=query, category=brief.category,
                 )
                 ext = "jpg"
                 fname = f"{stem}.{ext}"
