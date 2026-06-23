@@ -29,23 +29,73 @@ Concept (text)  →  Planner  →  Asset generation  →  Composition  →  Crit
   brand-palette alignment, text legibility), with an optional LLM note.
 - **Provider abstraction** — swap image/LLM backends via env vars; nothing is vendor-locked.
 
-## Quickstart
+## Examples
+
+All produced by the pipeline from a concept in `data/concepts.json` (format: FS 320×480).
+Each shows the title bar, per-frame scenes with a critic score, and **Tap/Swipe flow arrows**.
+
+**Generated assets** (`Pollinations`, keyless) — concept *"Escape Challenge Teaser"*:
+
+![Generated storyboard](docs/examples/generated_pollinations_fs.png)
+
+**Real CC-licensed assets** (`Openverse`, keyless) — same concept, composed from real photos:
+
+![Real-asset storyboard](docs/examples/real_openverse_fs.png)
+
+**Real assets**, concept *"City Tour"* — real LEGO imagery + rendered headline & CTA:
+
+![Real-asset storyboard 2](docs/examples/real_openverse_city_fs.png)
+
+> Generate your own: `streamlit run app/streamlit_app.py`, or see the CLI below.
+
+## Setup & run
+
+**Prerequisites:** Python **3.10+** and `pip`. No GPU, no API keys, no local models required.
+
+**1 — Clone & create a virtual environment**
 
 ```bash
-python -m venv .venv && source .venv/bin/activate
-pip install -r requirements.txt
+git clone <your-fork-url> Automated-Storyboard-Synthesis
+cd Automated-Storyboard-Synthesis
 
-# Web demo (recommended)
-streamlit run app/streamlit_app.py
-
-# Or the CLI
-python -m adsynth.cli --list
-PYTHONPATH=src python -m adsynth.cli --index 0 --format fs --out outputs/board.png
-PYTHONPATH=src python -m adsynth.cli --index 0 --dco 3        # ranked DCO variants
+python3 -m venv .venv
+source .venv/bin/activate            # Windows: .venv\Scripts\activate
 ```
 
-Everything works out of the box. To upgrade quality, copy `.env.example` → `.env` and add
-a free key (Gemini / Groq / OpenRouter for the agents, Hugging Face for image gen).
+**2 — Install dependencies**
+
+```bash
+pip install --upgrade pip
+pip install -r requirements.txt      # core: pillow, requests, pydantic, streamlit
+```
+
+**3 — Launch the web demo** (recommended)
+
+```bash
+streamlit run app/streamlit_app.py   # opens http://localhost:8501
+```
+
+Pick a concept → choose an **Image source** (generate vs. real assets) → **Generate storyboard**.
+
+**Or use the CLI**
+
+```bash
+python -m adsynth.cli --list                                   # list the 115 concepts
+PYTHONPATH=src python -m adsynth.cli --index 0 --format fs      # → outputs/<concept>_fs.png
+PYTHONPATH=src python -m adsynth.cli --index 0 --dco 3          # 3 ranked DCO variants
+PYTHONPATH=src python scripts/build_asset_pack.py --index 0     # real asset pack + storyboard
+```
+
+**Run the tests** (offline, no network)
+
+```bash
+pip install pytest
+ADSYNTH_IMAGE_PROVIDER=mock pytest -q                           # 6 passing
+```
+
+> Everything works out of the box with **zero keys**. To upgrade quality, copy
+> `.env.example` → `.env` and add a free key (Gemini / Groq / OpenRouter for the agents,
+> Hugging Face for image generation). See [Configuration](#configuration).
 
 ## Real asset packs (test data)
 
