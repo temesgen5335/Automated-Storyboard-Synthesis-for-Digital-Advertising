@@ -1,0 +1,52 @@
+{
+  "concept": "Roam Stay Explorer",
+  "explanation": "A playable-interstitial-style app ad for a fictional travel brand, Roam. Designed-UI composition: solid brand field + accent shape + app screen in a device frame + rendered copy, button and an interactive chip row. Each frame is one chip state (Hotels / Villas / Cabins) — tapping a chip swaps the featured stay, so the interaction itself tells the story.",
+  "implementation": {
+    "frame_1": {
+      "description": "Hotels state: brand field with accent circle behind the phone; app screen shows a boutique city hotel; Hotels chip selected.",
+      "interaction_type": "Tap",
+      "next_frame": "frame_2",
+      "duration": "4 seconds"
+    },
+    "frame_2": {
+      "description": "Villas state: same layout, app screen swaps to a hillside villa; Villas chip selected.",
+      "interaction_type": "Tap",
+      "next_frame": "frame_3",
+      "duration": "4 seconds"
+    },
+    "frame_3": {
+      "description": "Cabins state: app screen swaps to a lakeside cabin; Cabins chip selected; CTA carries the close.",
+      "interaction_type": "Tap",
+      "next_frame": "end",
+      "duration": "4 seconds"
+    }
+  },
+  "asset_suggestions": [
+    {
+      "frame_1": {
+        "Background": "design: solid brand field with accent circle bottom",
+        "Headline": "Bold headline reading 'Unlock *hotel* deals'",
+        "App Screen": "device: clean travel booking app screen featuring a boutique city hotel facade photo card with five rating stars and a nightly price tag, modern minimal UI",
+        "Interactive Chips": "chips: *Hotels*|Villas|Cabins",
+        "CTA Button": "Button reading 'Book your stay'",
+        "Legal": "Legal line reading 'Member prices. Terms apply.'"
+      },
+      "frame_2": {
+        "Background": "design: solid brand field with accent circle bottom",
+        "Headline": "Bold headline reading 'Unlock *villa* escapes'",
+        "App Screen": "device: clean travel booking app screen featuring a sunlit hillside villa with infinity pool photo card, five rating stars and a nightly price tag, modern minimal UI",
+        "Interactive Chips": "chips: Hotels|*Villas*|Cabins",
+        "CTA Button": "Button reading 'Book your stay'",
+        "Legal": "Legal line reading 'Member prices. Terms apply.'"
+      },
+      "frame_3": {
+        "Background": "design: solid brand field with accent circle bottom",
+        "Headline": "Bold headline reading 'Unlock *cabin* getaways'",
+        "App Screen": "device: clean travel booking app screen featuring a cozy lakeside timber cabin at dusk photo card, five rating stars and a nightly price tag, modern minimal UI",
+        "Interactive Chips": "chips: Hotels|Villas|*Cabins*",
+        "CTA Button": "Button reading 'Book now'",
+        "Legal": "Legal line reading 'Member prices. Terms apply.'"
+      }
+    }
+  ]
+}
