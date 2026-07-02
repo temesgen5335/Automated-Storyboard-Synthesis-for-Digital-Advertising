@@ -37,6 +37,8 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--variant", type=int, default=0, help="asset-suggestion variant")
     ap.add_argument("--dco", type=int, default=0, help="generate N DCO variants (ranked)")
     ap.add_argument("--out", type=str, default=None, help="output PNG path")
+    ap.add_argument("--animatic", action="store_true",
+                    help="also export a moving-ad preview (.gif; .mp4 if imageio installed)")
     args = ap.parse_args(argv)
 
     raws = load_raw_concepts()
@@ -76,6 +78,10 @@ def main(argv: list[str] | None = None) -> int:
     out = Path(args.out) if args.out else OUTPUT_DIR / f"{concept.name[:40].replace(' ', '_')}_{args.format}.png"
     board.image.convert("RGB").save(out)
     print(f"Saved storyboard -> {out}")
+    if args.animatic:
+        from .animatic import export_animatic
+        gif = export_animatic(board, str(out.with_suffix(".gif")))
+        print(f"Saved animatic   -> {gif}")
     if board.meta.get("grade"):
         print(f"Overall creative score: {board.meta['grade']['overall']:.3f}")
     return 0
