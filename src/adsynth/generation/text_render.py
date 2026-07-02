@@ -80,14 +80,39 @@ def render_text_asset(
     if is_cta:
         plate, fg = _hex(brand.accent) + (255,), _hex(brand.secondary) + (255,)
         radius = box_h // 2
+        # soft shadow + white ring: button stays legible over any background
+        shadow = Image.new("RGBA", (box_w + 8, box_h + 8), (0, 0, 0, 0))
+        ImageDraw.Draw(shadow).rounded_rectangle(
+            [4, 6, box_w + 3, box_h + 5], radius=radius, fill=(0, 0, 0, 90))
+        base = shadow
+        img = Image.new("RGBA", base.size, (0, 0, 0, 0))
+        img.alpha_composite(base)
+        draw = ImageDraw.Draw(img)
+        draw.rounded_rectangle([2, 2, box_w + 1, box_h + 1], radius=radius, fill=plate)
+        draw.rounded_rectangle([2, 2, box_w + 1, box_h + 1], radius=radius,
+                               outline=(255, 255, 255, 230), width=2)
+        off = 2
     else:
         plate, fg = (0, 0, 0, 130), _hex(brand.secondary) + (255,)
         radius = 10
-    draw.rounded_rectangle([0, 0, box_w - 1, box_h - 1], radius=radius, fill=plate)
+        img = Image.new("RGBA", (box_w, box_h), (0, 0, 0, 0))
+        draw = ImageDraw.Draw(img)
+        draw.rounded_rectangle([0, 0, box_w - 1, box_h - 1], radius=radius, fill=plate)
+        off = 0
 
-    y = pad
+    y = pad + off
     for ln in lines:
-        w = draw.textlength(ln, font=font)
-        draw.text(((box_w - w) / 2, y), ln, font=font, fill=fg)
+        w = draw.textlength(ln.replace("*", ""), font=font)
+        x = (box_w - w) / 2 + off
+        if "*" in ln:  # *word* -> accent color (opt-in markup; no '*' = old path)
+            accent_fill = _hex(brand.accent) + (255,)
+            in_accent = False
+            for seg in ln.split("*"):
+                if seg:
+                    draw.text((x, y), seg, font=font, fill=accent_fill if in_accent else fg)
+                    x += draw.textlength(seg, font=font)
+                in_accent = not in_accent
+        else:
+            draw.text((x, y), ln, font=font, fill=fg)
         y += line_h
     return img

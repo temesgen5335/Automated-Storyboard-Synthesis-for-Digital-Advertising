@@ -48,8 +48,12 @@ def plan_layout(assets: list[GeneratedAsset], fmt: AdFormat) -> list[Placement]:
     used_text_top = False
     for i, ga in enumerate(assets):
         cat = ga.brief.category
-        if "background" in cat.lower():
+        desc = (ga.brief.description or "").lstrip().lower()
+        if "background" in cat.lower() or desc.startswith("design:"):
             placements[i] = Placement(category=cat, x=0, y=0, width=W, height=H, z=0)
+            continue
+        if desc.startswith("chips:"):
+            bands[2].append(i)  # interactive tray sits low, above the CTA
             continue
         bi = _band_index(cat, used_text_top)
         if cat == "Text Elements" and bi == 0:
@@ -69,10 +73,17 @@ def plan_layout(assets: list[GeneratedAsset], fmt: AdFormat) -> list[Placement]:
         for i in idxs:
             ga = assets[i]
             cat = ga.brief.category
-            frac = _WIDTH_FRAC.get(cat, _DEFAULT_HERO_FRAC)
-            tw = int(W * frac)
+            desc = (ga.brief.description or "").lstrip().lower()
             img_w, img_h = ga.image.size
             aspect = img_h / img_w if img_w else 1.0
+            if desc.startswith("device:"):
+                # phone hero: size by band height, not width
+                th = int((band_h - gap * (len(idxs) + 1)) * (0.96 if len(idxs) == 1 else 0.6))
+                tw = int(th / aspect) if aspect else int(W * 0.5)
+                sized.append((i, max(8, tw), max(8, th)))
+                continue
+            frac = 0.92 if desc.startswith("chips:") else _WIDTH_FRAC.get(cat, _DEFAULT_HERO_FRAC)
+            tw = int(W * frac)
             th = int(tw * aspect)
             # clamp to band height share
             max_h = (band_h - gap * (len(idxs) + 1)) // len(idxs)

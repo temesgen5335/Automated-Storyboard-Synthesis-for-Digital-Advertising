@@ -39,6 +39,22 @@ class AssetGenerator:
         self.variant = variant
 
     def generate(self, brief: AssetBrief, concept: Concept, fmt: AdFormat, frame_id: str, idx: int) -> GeneratedAsset:
+        from ..composition.design_elements import (
+            render_chip_row, render_design_background, render_device_frame, split_prefix,
+        )
+        kind, spec = split_prefix(brief.description)
+        if kind == "design":
+            img = render_design_background(spec, self.brand, fmt.width, fmt.height)
+            return GeneratedAsset(brief=brief, image=img, source="design")
+        if kind == "chips":
+            img = render_chip_row(spec, self.brand, max_width=int(fmt.width * 0.92))
+            return GeneratedAsset(brief=brief, image=img, source="design")
+        if kind == "device":
+            prompt = self.planner.image_prompt(
+                AssetBrief(category="Product Image", description=spec), concept, self.brand, fmt)
+            seed = _seed(concept.name, frame_id, "device", idx, self.variant)
+            inner = self.image.generate(prompt, 512, 910, seed=seed, query=spec, category="Product Image")
+            return GeneratedAsset(brief=brief, image=render_device_frame(inner), source=f"design+{self.image.name}")
         if brief.is_text:
             img = render_text_asset(brief, self.brand, max_width=int(fmt.width * 0.9))
             return GeneratedAsset(brief=brief, image=img, source="pil-text")
