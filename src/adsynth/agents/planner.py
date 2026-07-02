@@ -23,6 +23,11 @@ class Planner:
 
     # -- image prompt ---------------------------------------------------------
     def image_prompt(self, brief: AssetBrief, concept: Concept, brand: BrandKit, fmt: AdFormat) -> str:
+        """Brand-aware text-to-image prompt (rich per-category templates)."""
+        from ..generation.prompt_style import build_prompt
+        return build_prompt(brief, concept, brand, fmt)
+
+    def _image_prompt_v1(self, brief: AssetBrief, concept: Concept, brand: BrandKit, fmt: AdFormat) -> str:
         """Deterministic, brand-aware text-to-image prompt for a visual asset."""
         style = ", ".join(brand.style_keywords)
         palette = " / ".join(brand.palette)
