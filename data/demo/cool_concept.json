@@ -1,0 +1,60 @@
+{
+  "concept": "One Platform, Not Five Tabs",
+  "explanation": "A COOL-Company-style campaign: opens on the pain of a fragmented adtech stack, resolves into one unified AI-powered platform (Create / Activate / Optimize), closes with a confident, low-friction CTA. Voice: confident, anti-complexity, performance-first, no fluff.",
+  "implementation": {
+    "frame_1": {
+      "description": "Chaotic montage of overlapping dashboards, tangled charts and disconnected tools, dimly lit, conveying overload. Headline lands over it.",
+      "interaction_type": "Tap",
+      "next_frame": "frame_2",
+      "duration": "4 seconds"
+    },
+    "frame_2": {
+      "description": "The chaos resolves: a single sleek unified platform interface, calm and luminous. The triad 'CREATE. ACTIVATE. OPTIMIZE.' anchors the frame.",
+      "interaction_type": "Swipe",
+      "next_frame": "frame_3",
+      "duration": "5 seconds"
+    },
+    "frame_3": {
+      "description": "Clean closing frame: brand mark, one confident line, and a direct CTA button.",
+      "interaction_type": "Tap",
+      "next_frame": "end",
+      "duration": "4 seconds"
+    }
+  },
+  "asset_suggestions": [
+    {
+      "frame_1": {
+        "Background Image": "dark moody scene of dozens of overlapping translucent analytics dashboards, tangled glowing chart lines and scattered browser windows, sense of digital chaos and overload",
+        "Headline": "Bold headline reading 'Five tools. Zero clarity.'",
+        "Subtext": "Supporting line reading 'Your ad stack shouldn't feel like this.'"
+      },
+      "frame_2": {
+        "Background Image": "single luminous unified analytics platform interface floating in calm dark space, clean modern UI, one coherent glowing dashboard replacing chaos, sense of order and control",
+        "Headline": "Triad headline reading 'CREATE. ACTIVATE. OPTIMIZE.'",
+        "Subtext": "Line reading 'One AI-powered platform. Every channel.'"
+      },
+      "frame_3": {
+        "Logo": "abstract minimal emblem of five fragments converging into one bold unified mark",
+        "Headline": "Closing line reading 'Performance, unified.'",
+        "CTA Text": "Button reading 'See It Work'"
+      }
+    },
+    {
+      "frame_1": {
+        "Background Image": "top-down view of a cluttered desk with many glowing screens showing mismatched marketing dashboards, cinematic shadows, overwhelming complexity",
+        "Headline": "Headline reading 'Where did your ad spend go?'",
+        "Subtext": "Line reading 'Fragmented stacks hide the answer.'"
+      },
+      "frame_2": {
+        "Background Image": "elegant single control-room screen showing omnichannel campaign flows converging into one clear performance graph trending upward, confident cool light",
+        "Headline": "Headline reading 'No black boxes. No blind spots.'",
+        "Subtext": "Line reading 'Transparent attribution across every channel.'"
+      },
+      "frame_3": {
+        "Logo": "abstract minimal emblem of five fragments converging into one bold unified mark",
+        "Headline": "Closing line reading 'Adtech, finally in focus.'",
+        "CTA Text": "Button reading 'Let\u2019s Talk'"
+      }
+    }
+  ]
+}
